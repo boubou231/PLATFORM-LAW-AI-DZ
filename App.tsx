@@ -1,109 +1,0 @@
-import React, { useState } from 'react';
-
-const App: React.FC = () => {
-  const [view, setView] = useState<'landing' | 'auth' | 'dashboard'>('landing');
-  const [isRegistering, setIsRegistering] = useState(false);
-
-  // أنماط التصميم المستوحاة من صورك مع لمسات عصرية
-  const styles = {
-    container: { minHeight: '100vh', backgroundColor: '#fdfdfd', fontFamily: 'system-ui, sans-serif', direction: 'rtl' as const },
-    headerNav: { 
-      display: 'flex', justifyContent: 'space-between', alignItems: 'center', 
-      padding: '0.8rem 1.5rem', backgroundColor: '#062c23', color: 'white', position: 'sticky' as const, top: 0, zIndex: 100 
-    },
-    hero: { padding: '3.5rem 1.5rem', textAlign: 'center' as const, background: '#fcfcfc', borderBottom: '1px solid #eee' },
-    mainGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.2rem', padding: '1.5rem', maxWidth: '1200px', margin: '0 auto' },
-    
-    // تصميم البطاقة الموحد لكل الأقسام
-    serviceCard: { 
-      backgroundColor: 'white', borderRadius: '1.8rem', padding: '1.8rem', position: 'relative' as const,
-      boxShadow: '0 8px 30px rgba(0,0,0,0.04)', border: '1px solid #f0f0f0', textAlign: 'right' as const,
-      transition: 'transform 0.2s ease'
-    },
-    iconBox: { 
-      position: 'absolute' as const, left: '1.5rem', top: '1.5rem', width: '55px', height: '55px', 
-      backgroundColor: '#062c23', borderRadius: '0.8rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem'
-    },
-    btnEmail: { 
-      backgroundColor: '#d97706', color: 'white', border: 'none', padding: '0.5rem 1rem', 
-      borderRadius: '0.5rem', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.85rem' 
-    },
-    btnAction: { background: 'none', border: 'none', color: '#b48c44', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.9rem', padding: 0 }
-  };
-
-  const services = [
-    { id: 1, title: 'إستشارة قانونية', desc: 'إجابات دقيقة مع مراجعة مستجدات آخر 10 أيام.', icon: '⚖️' },
-    { id: 2, title: 'تحليل الوثائق', desc: 'تحليل ذكي للعقود والصور بمطابقة JORADP.', icon: '🔍' },
-    { id: 3, title: 'صياغة العقود', desc: 'نماذج عرفية محدثة لعام 2026.', icon: '📄' },
-    { id: 4, title: 'البحث العلمي', desc: 'بحوث أكاديمية (20 صفحة) تلتزم بالتهميش.', icon: '🎓' },
-    { id: 5, title: 'الرادار القانوني', desc: 'تمشيط آلي لآخر المستجدات وتصنيفها.', icon: '📡' },
-    { id: 6, title: 'المصادر والمراجع', desc: 'قائمة المصادر السيادية والمجلات الجزائرية.', icon: '📚' }
-  ];
-
-  // 1. الواجهة التعريفية مع شرح الدور (Landing Page)
-  if (view === 'landing') {
-    return (
-      <div style={styles.container}>
-        <nav style={styles.headerNav}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ backgroundColor: '#d97706', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem' }}>DZ</span>
-            <span style={{ fontWeight: 'bold' }}>منصة القانون الجزائرية</span>
-          </div>
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <button onClick={() => window.location.href='mailto:hichembenzerouk3@gmail.com'} style={styles.btnEmail}>الدعم التقني</button>
-            <button onClick={() => setView('auth')} style={{ ...styles.btnEmail, backgroundColor: '#0f3a31' }}>دخول / تسجيل</button>
-          </div>
-        </nav>
-
-        <header style={styles.hero}>
-          <h1 style={{ color: '#062c23', fontSize: '2.2rem', marginBottom: '1rem' }}>منصة القانون الجزائرية</h1>
-          <p style={{ color: '#555', fontSize: '1.1rem', fontStyle: 'italic', borderRight: '4px solid #d97706', paddingRight: '1rem', display: 'inline-block' }}>
-            « القانون ليس قيداً للحرية، بل هو الحصن الذي يحميها »
-          </p>
-          <div style={{ marginTop: '2rem', color: '#666', fontSize: '0.95rem', maxWidth: '700px', margin: '2rem auto' }}>
-            نحن منصة متطورة تساعدك على الحصول على استشارات فورية، صياغة عقود احترافية، وإجراء بحوث أكاديمية 
-            بمطابقة حية للجريدة الرسمية الجزائرية لعام 2026 [cite: 2026-01-19].
-          </div>
-        </header>
-
-        <div style={styles.mainGrid}>
-          {services.map(s => (
-            <div key={s.id} style={styles.serviceCard}>
-              <div style={styles.iconBox}>{s.icon}</div>
-              <h3 style={{ color: '#062c23', marginTop: '0.5rem' }}>{s.title}</h3>
-              <p style={{ color: '#666', fontSize: '0.9rem', minHeight: '40px' }}>{s.desc}</p>
-              <button onClick={() => setView('auth')} style={styles.btnAction}>دخول الخدمة ..</button>
-            </div>
-          ))}
-        </div>
-
-        <footer style={{ textAlign: 'center', padding: '2rem', color: '#888', fontSize: '0.8rem', backgroundColor: '#fff', borderTop: '1px solid #eee' }}>
-          <p style={{ backgroundColor: '#fff9db', padding: '10px', borderRadius: '8px', display: 'inline-block', color: '#856404', border: '1px solid #ffeeba', marginBottom: '1rem' }}>
-            ⚠️ إخلاء مسؤولية: الاستشارات إرشادية فقط ولا تغني عن استشارة محامي
-          </p>
-          <p>© 2026 منصة القانون الجزائرية - حماية المعطيات الشخصية مكفولة بالقانون 18-07 [cite: 2026-01-19]</p>
-        </footer>
-      </div>
-    );
-  }
-
-  // 2. واجهة الدخول الموحدة
-  return (
-    <div style={{ ...styles.container, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ ...styles.serviceCard, width: '100%', maxWidth: '400px', textAlign: 'center' }}>
-        <h2 style={{ color: '#062c23', marginBottom: '1.5rem' }}>{isRegistering ? 'إنشاء حساب جديد' : 'تسجيل الدخول'}</h2>
-        <input type="email" placeholder="البريد الإلكتروني" style={{ width: '100%', padding: '0.8rem', marginBottom: '1rem', borderRadius: '0.5rem', border: '1px solid #ddd' }} />
-        <input type="password" placeholder="كلمة المرور" style={{ width: '100%', padding: '0.8rem', marginBottom: '1.5rem', borderRadius: '0.5rem', border: '1px solid #ddd' }} />
-        <button style={{ ...styles.btnEmail, width: '100%', padding: '1rem' }}>تأكيد الدخول</button>
-        <p style={{ marginTop: '1rem', fontSize: '0.9rem' }}>
-          {isRegistering ? 'لديك حساب؟' : 'ليس لديك حساب؟'} 
-          <span onClick={() => setIsRegistering(!isRegistering)} style={{ color: '#d97706', cursor: 'pointer', fontWeight: 'bold' }}> اضغط هنا</span>
-        </p>
-        <button onClick={() => setView('landing')} style={{ marginTop: '1rem', background: 'none', border: 'none', color: '#888', cursor: 'pointer' }}>العودة للرئيسية</button>
-      </div>
-    </div>
-  );
-};
-
-export default App;
-      
